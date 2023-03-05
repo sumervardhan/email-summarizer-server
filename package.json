@@ -1,9 +1,9 @@
 {
-  "name": "node-js-getting-started",
+  "name": "email-summarizer-server",
   "version": "0.3.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "Proxy to make API calls to OpenAI for Email Summary Chrome Extension",
   "engines": {
-    "node": "16.x"
+    "node": "19.x"
   },
   "main": "index.js",
   "scripts": {

@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000
 // openai api helper setup
 const configuration = new Configuration({
   organization: "org-Ku9kxO5ElyIKsEbBhqS1FCUP",
-  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
