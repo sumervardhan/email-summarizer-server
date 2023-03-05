@@ -29,8 +29,8 @@ express()
       model= MODEL,
       messages=[
           {"role": "system", "content": CHAT_BOT_PRIMER},
-          {"role": "user", "content": prompt},
-          {"role": "assistant", "content": input_data},
+          {"role": "user", "content": req.body.prompt},
+          {"role": "assistant", "content": req.body.input_data},
       ],
       temperature=temperature,
   )
