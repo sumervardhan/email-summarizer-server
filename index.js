@@ -1,37 +1,45 @@
-import { Configuration, OpenAIApi } from "openai";
-
+const { Configuration, OpenAIApi } = require("openai");
+var bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-// openai api helper setup
-const configuration = new Configuration({
-  organization: "org-Ku9kxO5ElyIKsEbBhqS1FCUP",
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
 // openai API call params
 const MODEL = "gpt-3.5-turbo"
-const CHAT_BOT_PRIMER = "You are a secretary for a busy CEO. Your job is to help summarise their emails, "
-                        + "highlighting important points, questions, and action items."
+const CHAT_BOT_PRIMER = "You are a my secretary. I am a busy CEO. Your job is "
+                        + "to help summarise my emails. Highlight "
+                        + "important points, questions, and action items."
+const SUMMARY_GENERATION_PROMPT = "Summarise this email. Structure the summary "
+                                  + "as three lists - Important Points, Questions "
+                                  + "and Action Items.\n"
+
+// create application/x-www-form-urlencoded parser
+const urlencodedParser = bodyParser.urlencoded({ extended: false })                                 
+
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/handleOpenaiApiCall', (req, res) => makeOpenAiApiCall(req, res))
+  .get('/handleOpenaiApiCall', urlencodedParser, async function(req, res) {
+    const response = await makeOpenAiApiCall(req);
+    res.send(response);
+  })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-  async function makeOpenAiApiCall(req, res){
-    response = openai.ChatCompletion.create(
-      model= MODEL,
-      messages=[
-          {"role": "system", "content": CHAT_BOT_PRIMER},
-          {"role": "user", "content": req.body.prompt},
-          {"role": "assistant", "content": req.body.input_data},
-      ],
-      temperature=temperature,
-  )
+
+  async function makeOpenAiApiCall(req){
+    const configuration = new Configuration({
+      apiKey: "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",
+    });
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createChatCompletion({
+      model: MODEL,
+      messages: [
+        {"role": "system", "content": CHAT_BOT_PRIMER},
+        {"role": "user", "content": SUMMARY_GENERATION_PROMPT + req.body.input_data}
+      ]
+    });
+    return response.data.choices[0].message.content
   }
