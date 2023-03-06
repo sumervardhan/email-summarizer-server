@@ -28,7 +28,7 @@ express()
   .get('/handleOpenaiApiCall', async function(req, res) {
     const response = await makeOpenAiApiCall(req);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.send(response);
+    res.send({"data": response});
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
