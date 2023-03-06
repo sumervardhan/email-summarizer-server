@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 // Uncomment below line to access API KEY stored locally in .env
 // Make sure to not push key to github
-// require('dotenv').config();
+require('dotenv').config();
 
 
 // openai API call params
@@ -36,6 +36,7 @@ express()
     try {
       const parsedUrl = url.parse(req.url);
       const query = querystring.parse(parsedUrl.query);
+      console.log(query)
       const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
       });
@@ -44,7 +45,7 @@ express()
         model: MODEL,
         messages: [
           {"role": "system", "content": CHAT_BOT_PRIMER},
-          {"role": "user", "content": SUMMARY_GENERATION_PROMPT + query.input_data}
+          {"role": "user", "content": SUMMARY_GENERATION_PROMPT + decodeURIComponent(query.input_data)}
         ]
       });
       return response.data.choices[0].message.content
