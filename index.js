@@ -1,8 +1,13 @@
-const { Configuration, OpenAIApi } = require("openai");
-const bodyParser = require('body-parser')
-const express = require('express')
-const path = require('path')
-const PORT = process.env.PORT || 5000
+const { Configuration, OpenAIApi } = require('openai');
+const bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const PORT = process.env.PORT || 5000;
+
+// Uncomment below line to access API KEY stored locally in .env
+// Make sure to not push key to github
+// require('dotenv').config();
+
 
 // openai API call params
 const MODEL = "gpt-3.5-turbo"
@@ -30,7 +35,6 @@ express()
 
 
   async function makeOpenAiApiCall(req){
-    console.log(process.env.OPENAI_API_KEY)
     try {
       const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
