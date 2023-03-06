@@ -1,5 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
@@ -31,7 +32,7 @@ express()
 
   async function makeOpenAiApiCall(req){
     const configuration = new Configuration({
-      apiKey: "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",
+      apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     const response = await openai.createChatCompletion({
