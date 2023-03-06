@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 // openai API call params
 const MODEL = "gpt-3.5-turbo"
-const CHAT_BOT_PRIMER = "You are a my secretary. I am a busy CEO. Your job is "
+const CHAT_BOT_PRIMER = "You are my secretary. I am a busy CEO. Your job is "
                         + "to help summarise my emails. Highlight "
                         + "important points, questions, and action items."
 const SUMMARY_GENERATION_PROMPT = "Summarise this email. Structure the summary "
