@@ -30,6 +30,7 @@ express()
 
 
   async function makeOpenAiApiCall(req){
+    console.log(process.env.OPENAI_API_KEY)
     try {
       const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
