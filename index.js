@@ -31,16 +31,21 @@ express()
 
 
   async function makeOpenAiApiCall(req){
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-    const openai = new OpenAIApi(configuration);
-    const response = await openai.createChatCompletion({
-      model: MODEL,
-      messages: [
-        {"role": "system", "content": CHAT_BOT_PRIMER},
-        {"role": "user", "content": SUMMARY_GENERATION_PROMPT + req.body.input_data}
-      ]
-    });
-    return response.data.choices[0].message.content
+    try {
+      const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+      const openai = new OpenAIApi(configuration);
+      const response = await openai.createChatCompletion({
+        model: MODEL,
+        messages: [
+          {"role": "system", "content": CHAT_BOT_PRIMER},
+          {"role": "user", "content": SUMMARY_GENERATION_PROMPT + req.body.input_data}
+        ]
+      });
+      return response.data.choices[0].message.content
+    }
+    catch (exception){
+      console.log(exception)
+    }
   }
