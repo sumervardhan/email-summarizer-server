@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 // Uncomment below line to access API KEY stored locally in .env
 // Make sure to not push key to github
-require('dotenv').config();
+// require('dotenv').config();
 
 
 // openai API call params
